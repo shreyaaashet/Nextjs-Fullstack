@@ -33,3 +33,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ignore .env files
+.env
+.env.*
+# Ignore dbConfig directory
+dbconfig/*
+
