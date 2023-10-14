@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {axios} from "axios";
 
 
-function page() {
+function Page() {
 
   const [user, setUser] = useState({
     email: "",
@@ -61,5 +61,5 @@ function page() {
   );
 };
 
-export default page
+export default Page;
   
