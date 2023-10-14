@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {axios} from "axios";
 
 
 function Page() {
+const router = useRouter();
 
   const [user, setUser] = useState({
     email: "",
@@ -13,10 +14,22 @@ function Page() {
     username:"",
   })
 
+  const [disableButton, setDisableButton] = useState(true);
+
 
   const onSignup=async ()=>{
     console.log(user);
   }
+
+  useEffect(() => {
+  if(user.email.length>0 && user.password.length>0 && user.username.length>0){
+  setDisableButton(false);
+  }
+  else{
+    setDisableButton(true);
+  }
+  }, [user])
+  
   return (
 <div className="bg-gray-100 h-screen flex justify-center items-center ">
       <form className="bg-white p-8 rounded shadow-md w-4/6">
@@ -27,7 +40,7 @@ function Page() {
            name="username" 
            value={user.username} 
            onChange={(e)=>setUser({...user,username:e.target.value})}
-            className="border rounded px-3 py-2 w-full"
+            className="border rounded px-3 py-2 w-full text-gray-700"
             placeholder='username'
             />
         </div>
@@ -37,7 +50,7 @@ function Page() {
            name="email"
            value={user.email}
            onChange={(e)=>setUser({...user,email:e.target.value})}
-            className="border rounded px-3 py-2 w-full" 
+            className="border rounded px-3 py-2 w-full  text-gray-700" 
             placeholder='email'
             />
         </div>
@@ -47,13 +60,13 @@ function Page() {
            name="password"
            value={user.password}
            onChange={(e)=>setUser({...user,password:e.target.value})}
-            className="border rounded px-3 py-2 w-full" 
+            className="border rounded px-3 py-2 w-full text-gray-700" 
             placeholder='password'
             />
         </div>
         <button onClick={onSignup}
          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded w-full mb-2">
-          Sign Up
+         {disableButton?"Please Fill in the data ":" Sign Up"}
         </button>
         <Link className='text-neutral-800' href={'/login'}>Already a User ? </Link>
       </form>
