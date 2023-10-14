@@ -34,9 +34,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Ignore .env files
-.env
-.env.*
-# Ignore dbConfig directory
-dbconfig/*
+# Ignore .env files in the root directory
+/.env
+
+# Ignore dbconfig.ts file in the src/dbConfig directory
+/src/dbConfig/dbconfig.ts
+
 
