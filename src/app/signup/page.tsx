@@ -58,8 +58,7 @@ const router = useRouter();
            name="username" 
            value={user.username} 
            onChange={(e)=>setUser({...user,username:e.target.value})}
-            className="border rounded px-3 py-2 w-full text-gray-700"
-            placeholder='username'
+            className="border rounded px-3 py-2 w-full text-gray-700" placeholder='username'
             />
         </div>
         <div className="mb-4">

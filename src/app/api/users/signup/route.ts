@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     const newUser = new User({
       username,
       email,
-      password: hashPassword
+      password: hashPassword,
     });
 
     const savedUser = await newUser.save();
