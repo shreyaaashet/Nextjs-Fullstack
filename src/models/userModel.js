@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { UserDocument } from './user.model';
 
 const userSchema= new mongoose.Schema({
    username:{

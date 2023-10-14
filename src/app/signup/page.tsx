@@ -2,7 +2,8 @@
 import React, { useState , useEffect} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import {axios} from "axios";
+import axios from "axios";
+import { toast } from 'react-hot-toast';
 
 
 function Page() {
@@ -14,27 +15,44 @@ const router = useRouter();
     username:"",
   })
 
-  const [disableButton, setDisableButton] = useState(true);
+  const [disableButton, setDisableButton] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-
-  const onSignup=async ()=>{
-    console.log(user);
+  
+  const onSignup = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault(); 
+    try{
+     setLoading(true);
+     const response = await axios.post("/api/users/signup", user)
+     console.log('sign up success', response.data);
+     router.push("/profile");
+    } catch (error:any) {
+      toast.error('Error Occured while signing up !');
+      console.log(error.message)
+    }
+    finally{
+      setLoading(false);
+      // toast.success('Signup successful!');
+    }
+    
   }
 
   useEffect(() => {
-  if(user.email.length>0 && user.password.length>0 && user.username.length>0){
+    
+  if(user.email.length > 0 && user.password.length > 0 && user.username.length > 0){
   setDisableButton(false);
-  }
-  else{
+  }else{
     setDisableButton(true);
   }
   }, [user])
   
   return (
-<div className="bg-gray-100 h-screen flex justify-center items-center ">
-      <form className="bg-white p-8 rounded shadow-md w-4/6">
-        <h2 className="text-2xl font-semibold mb-6 text-neutral-800 ">Sign Up</h2>
+  <div className="bg-gray-100 h-screen flex justify-center items-center ">
+      <form onSubmit={onSignup} className="bg-white p-8 rounded shadow-md w-4/6">
+        <h2 className="text-2xl font-semibold mb-6 text-neutral-800 ">{loading? "Processing": "Sign up"}</h2>
         <div className="mb-4">
+          {/* <h6 className='text-gray-700'> {loading? "Processing":"Sign in sucessful"}</h6> */}
+         
           <label htmlFor="username" className="block text-gray-700 font-medium mb-2">Username</label>
           <input type="text" id="username"
            name="username" 
@@ -64,13 +82,13 @@ const router = useRouter();
             placeholder='password'
             />
         </div>
-        <button onClick={onSignup}
+        <button 
          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded w-full mb-2">
          {disableButton?"Please Fill in the data ":" Sign Up"}
         </button>
         <Link className='text-neutral-800' href={'/login'}>Already a User ? </Link>
       </form>
-    </div>
+  </div>
   );
 };
 
