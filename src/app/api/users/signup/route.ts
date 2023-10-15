@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
       savedUser
     });
 
-  } catch (error) {
-    return NextResponse.json({error:error.message},{status:500})
+  } catch (error:any) { 
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
